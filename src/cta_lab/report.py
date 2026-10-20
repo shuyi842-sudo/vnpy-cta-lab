@@ -88,7 +88,7 @@ def export_report(
             )
         )
         fig_oos.update_layout(
-            title="Out-of-sample equity (flat boundaries, fixed sizing budget)",
+            title="Out-of-sample equity",
             template="plotly_white",
             height=350,
         )
@@ -97,7 +97,7 @@ def export_report(
     label = (
         "合成数据 · 仅验证工程流程，不代表市场收益"
         if kind == "synthetic"
-        else "用户提供真实行情 · 数据授权与合约规则见来源说明"
+        else "真实行情研究 · 数据来源、授权与合约规则见下方说明"
     )
     stat_table = pd.DataFrame([run.statistics]).T.to_html(
         header=False, escape=True, float_format=lambda x: f"{x:,.6f}"
@@ -112,7 +112,7 @@ def export_report(
     source = html.escape(provenance["source"])
     body = f"""<!doctype html><html lang="zh-CN"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>CTA Lab · Research Evidence</title>
-<style>body{{font:16px/1.65 system-ui,'Microsoft YaHei',sans-serif;margin:32px auto;padding:0 22px;max-width:1150px;color:#17243a;background:#f7f9fc}}h1{{font-size:34px}}.notice{{padding:16px;border-left:5px solid #d18a00;background:#fff1cf}}table{{border-collapse:collapse;background:white}}td,th{{padding:8px 14px;border:1px solid #d5dce7;text-align:left}}code{{background:#e7edf5;padding:2px 5px}}section{{margin:32px 0}}footer{{color:#5d6c7c}}</style>
+<style>*{{box-sizing:border-box}}body{{font:16px/1.65 system-ui,'Microsoft YaHei',sans-serif;margin:32px auto;padding:0 22px;max-width:1150px;color:#17243a;background:#f7f9fc;overflow-wrap:anywhere}}h1{{font-size:34px}}.notice{{padding:16px;border-left:5px solid #d18a00;background:#fff1cf}}table{{border-collapse:collapse;background:white}}td,th{{padding:8px 14px;border:1px solid #d5dce7;text-align:left}}.table-scroll{{max-width:100%;overflow-x:auto}}.table-scroll table{{font-size:14px}}code{{background:#e7edf5;padding:2px 5px}}section{{margin:32px 0;min-width:0}}.plotly-graph-div{{max-width:100%}}footer{{color:#5d6c7c}}@media(max-width:600px){{body{{padding:0 14px;margin:18px auto}}h1{{font-size:26px}}td,th{{padding:7px 10px}}}}</style>
 <h1>CTA Lab / vn.py 研究报告</h1><p class="notice">{label}</p>
 <p>来源：{source}<br>输入 SHA-256：<code>{provenance["sha256"]}</code></p>
 <p>日线收盘产生信号，最早下一根 K 线成交；采用 vn.py 限价撮合与逐日盯市。最后两根 K 线用于退出，不新增风险。</p>
@@ -122,4 +122,7 @@ def export_report(
 <section><h2>解释边界</h2><p>基准为不持仓且零利息的现金。手续费为成交额比例，滑点按每手每边固定价格扣款；不模拟成交量容量、保证金追缴、涨跌停队列及真实柜台。止损按收盘判断，跳空可能扩大亏损。仓位预算基于固定初始资金；不是资金复利再平衡。</p>
 <p>单合约数据不自动换月、不复权；连续合约不得直接当可交易合约。无交易日历校验，不会把周末、节假日或缺失数据自行补齐。最终退出未成交会报错。</p></section>
 <footer>可核查文件：daily.csv · trades.csv · events.json · evidence.json · oos_daily.csv（如有）。收益结果不构成实盘能力证明。</footer></html>"""
+    body = body.replace("<table", '<div class="table-scroll"><table').replace(
+        "</table>", "</table></div>"
+    )
     (out / "report.html").write_text(body, encoding="utf-8")
