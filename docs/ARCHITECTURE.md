@@ -1,3 +1,5 @@
+> 本文保留 v1 单合约基线。当前多品种版本请见 [组合研究](PORTFOLIO_RESEARCH.md) 与 [组合架构](PORTFOLIO_ARCHITECTURE.md)。
+
 # 架构与计算约定
 
 ## 数据流

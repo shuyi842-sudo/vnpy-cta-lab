@@ -1,0 +1,194 @@
+{
+  "provenance": {
+    "data_kind": "real",
+    "selection_lock_sha256": "47f0207f65161d151b02645b1a28d7980c2d4b0141b35d9e115d2fd8a662f79e",
+    "source_git_commit": "8e015de56ac2ab0c01b5d715814c83ed6969ff3b",
+    "chosen": {
+      "entry_window": 20,
+      "atr_multiple": 3
+    },
+    "development_sources": [
+      {
+        "year": 2023,
+        "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202401/P020240119587353273027.zip",
+        "sha256": "605e119b8f6e7cd73b02fa18aa75ce1b388d5628aa024d7f5b7961d028a9ec2c"
+      },
+      {
+        "year": 2024,
+        "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202501/P020250103380580546440.zip",
+        "sha256": "68505aefe460ffa3167bd200477a5ebb05a8aaac5e477bb013e97ffbcf7bc99e"
+      },
+      {
+        "year": 2025,
+        "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202601/P020260317382428557825.zip",
+        "sha256": "fe0122e1ff0e072fc200ce924c488407a0305d3e5790692a19efc999709d4902"
+      }
+    ],
+    "test_sources": [
+      {
+        "year": 2026,
+        "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/annualdata/annualdata_futures/202602/P020261009564142736862.zip",
+        "sha256": "5ff3e4e8ce2446b6e0db294b2c123383c32f5de62c8c27779d312096c7dbc557"
+      }
+    ],
+    "period": [
+      "2026-01-01",
+      "2026-09-30"
+    ],
+    "receipt": {
+      "identity": {
+        "selection_lock_sha256": "47f0207f65161d151b02645b1a28d7980c2d4b0141b35d9e115d2fd8a662f79e",
+        "test_panel_sha256": "ae36ed13bcaf6d9c6f99c3771aab2df167bb85d570033f0f259b6de3f29c92a9",
+        "code_hashes": {
+          "portfolio.py": "23f50815cf18a773e75295156fa5b82535eb4c5a7a0f7995632d1d87085d48f9",
+          "portfolio_model.py": "cef7a6ab4a2c004dcb3aa4c1ae8a9485c205446eb96ff779f6be65bcf50d73e8",
+          "portfolio_data.py": "8bf8762ae2a43356ec4746fe31edc032b5f6ac76e4fbe1da2a74503418f0d19e",
+          "portfolio_research.py": "27625cbb0e40b2c17b0640f981369771cb4e17a5d713f751fe5165f524cd910f",
+          "metrics.py": "f40368d498c8596761d2531e17393569269ff23f6f28b36362781ca3d0999ece",
+          "data.py": "049d8586000c1c97f156957de9a5fb85d44f649207ac88f214f0af0aad6f5998",
+          "shfe.py": "a874103e1efbe29369eaabcd5e6fb75facc6b5e982158dc3eb73a978e641e8bd"
+        }
+      },
+      "first_evaluation_utc": "2026-10-20T12:41:58.641965+00:00",
+      "status": "completed",
+      "statistics": {
+        "days": 181,
+        "net_pnl": -1212.7855000000009,
+        "end_equity": 998787.2145,
+        "total_return": -0.0012127855000000354,
+        "cagr": -0.0016077954174910092,
+        "sharpe": -0.10025052652692111,
+        "max_drawdown": -0.009236232999999983,
+        "solvent": true,
+        "commission": 327.7855,
+        "slippage": 940.0,
+        "fills": 22,
+        "annual_days": 240,
+        "roll_cost": 329.721,
+        "roll_selections": 20,
+        "rejections": 0
+      },
+      "chosen": {
+        "entry_window": 20,
+        "atr_multiple": 3
+      }
+    }
+  },
+  "protocol": {
+    "protocol_version": "portfolio-v1",
+    "capital": 1000000,
+    "annual_days": 240,
+    "development": [
+      "2023-01-01",
+      "2024-12-31"
+    ],
+    "validation": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "holdout": [
+      "2026-01-01",
+      "2026-09-30"
+    ],
+    "products": {
+      "rb": {
+        "multiplier": 10,
+        "tick": 1,
+        "margin_rate": 0.15
+      },
+      "cu": {
+        "multiplier": 5,
+        "tick": 10,
+        "margin_rate": 0.15
+      },
+      "al": {
+        "multiplier": 5,
+        "tick": 5,
+        "margin_rate": 0.15
+      }
+    },
+    "commission_rate": 0.0001,
+    "slippage_ticks": 1,
+    "entry_windows": [
+      20,
+      40,
+      60
+    ],
+    "atr_multiples": [
+      2,
+      3
+    ],
+    "exit_window": 15,
+    "atr_window": 20,
+    "risk_fraction": 0.005,
+    "portfolio_risk_cap": 0.015,
+    "product_notional_cap": 0.5,
+    "gross_notional_cap": 1.5,
+    "margin_cap": 0.35,
+    "max_contracts": 10,
+    "daily_loss_limit": 0.02,
+    "drawdown_limit": 0.1,
+    "min_previous_volume": 100,
+    "roll_oi_ratio": 1.1,
+    "delivery_buffer_days": 20,
+    "min_selection_fills": 12,
+    "entry_priority": [
+      "rb",
+      "cu",
+      "al"
+    ],
+    "fallback": {
+      "entry_window": 20,
+      "atr_multiple": 2
+    }
+  },
+  "statistics": {
+    "days": 181,
+    "net_pnl": -1212.7855000000009,
+    "end_equity": 998787.2145,
+    "total_return": -0.0012127855000000354,
+    "cagr": -0.0016077954174910092,
+    "sharpe": -0.10025052652692111,
+    "max_drawdown": -0.009236232999999983,
+    "solvent": true,
+    "commission": 327.7855,
+    "slippage": 940.0,
+    "fills": 22,
+    "annual_days": 240,
+    "roll_cost": 329.721,
+    "roll_selections": 20,
+    "rejections": 0
+  },
+  "product_contributions": [
+    {
+      "product": "rb",
+      "net_pnl": -5142.393,
+      "commission": 232.39300000000003,
+      "slippage": 740,
+      "fills": 14
+    },
+    {
+      "product": "cu",
+      "net_pnl": 0.0,
+      "commission": 0.0,
+      "slippage": 0,
+      "fills": 0
+    },
+    {
+      "product": "al",
+      "net_pnl": 3929.6075,
+      "commission": 95.3925,
+      "slippage": 200,
+      "fills": 8
+    }
+  ],
+  "runtime": {
+    "python": "3.11.9",
+    "vnpy": "4.5.0",
+    "vnpy_portfoliostrategy": "1.3.0",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6"
+  },
+  "accounting": "single initial capital; cash-flow ledger reconciles to upstream portfolio daily PnL",
+  "execution": "next-open marketable orders only; close-before-open; missing held bar fails; missing execution bar cancels order"
+}

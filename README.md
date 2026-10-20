@@ -1,46 +1,52 @@
 # vnpy-cta-lab
 
-基于 **VeighNa / vn.py 4.5.0** 的国内期货 CTA 研究与历史订单回放项目。实现数据来源追踪、Donchian/ATR 策略、风险限额、逐日盯市、滚动样本外验证及离线报告。
+基于 **vn.py 4.5.0 / vnpy_portfoliostrategy 1.3.0** 的国内期货多品种 CTA 研究项目：实际合约因果换月、共享资金账户、参数封存与独立测试、逐日现金流对账。兼顾量化研究与量化开发求职展示。
 
-项目使用官方 `CtaTemplate` 和 `BacktestingEngine`，不重新实现撮合。定位是可审计的研究工程作品：能够说明策略为什么下单、下一根 K 线如何成交、成本如何计算，以及全样本收益为何不等于样本外表现。
+## 实际完成的研究
 
-## 已运行的真实行情研究
+事前固定螺纹钢、铜、铝三个品种，使用上期所实际月份合约 OHLCV 与持仓量。2023–2024 开发，2025 验证；六组统一参数选择完成并公开提交后，才下载和评估 2026 年 1–9 月数据。研究协议、实现、参数选择分别保留 Git 提交，代码与数据哈希可检查。
 
-数据来自上海期货交易所官方 2024、2025 年年度压缩包。研究对象预设为两个实际螺纹钢合约，分别运行，不拼接连续合约、不做换月收益假设。
+| 最终测试指标 | 结果 |
+|---|---:|
+| 初始共享权益 | 1,000,000 元 |
+| 测试交易日 / 成交笔数（每边） | 181 / 22 |
+| 期末权益 | 998,787.2145 元 |
+| 净收益率 / Sharpe | **−0.1213% / −0.1003** |
+| 最大回撤 | −0.9236% |
+| 毛盈亏 / 手续费与滑点 | 55 / 1,267.7855 元 |
 
-| 合约 | 有效日线 | 数据区间 | 全样本净收益 | 样本外净收益 | 样本外 Sharpe | 样本外成交笔数 |
-|---|---:|---|---:|---:|---:|---:|
-| rb2505 | 234 | 2024-05-16 至 2025-04-30 | 0.6353% | -0.3933% | -1.5526 | 4 |
-| rb2510 | 238 | 2024-10-16 至 2025-09-30 | 1.1802% | 0.2008% | 0.2737 | 6 |
+**这组结果不支持稳定盈利。** 保留测试亏损，不根据测试结果重选参数。铜在最终测试中没有成交，仍完整保留在固定品种池与贡献表中。20 次合约选择变更对应 7 笔实际换月相关成交，不能当作 20 次完成换月。
 
-样本外由 120 根初始训练、每折 40 根测试构成，每个合约产生两个完整测试折，合计 80 个测试交易日。剩余不足一折的尾部明确列为未评估。两个合约的日期存在重叠，不能视为独立市场证据，也没有把两个 100 万资金账户直接相加成一个组合收益。
+![冻结参数后的组合收益与品种贡献](docs/results/portfolio_holdout.png)
 
-**结论：目前不能支持“策略具有稳定超额收益”。** 一个合约样本外亏损，样本短、成交少；正收益不足以证明 alpha。详见 [研究报告](docs/RESEARCH.md) 和 [机器可读证据](docs/results/)。这是研究结论，而不是待调参消除的报错。
+[完整研究报告](docs/PORTFOLIO_RESEARCH.md) · [架构与记账约定](docs/PORTFOLIO_ARCHITECTURE.md) · [固定协议](docs/PORTFOLIO_PROTOCOL.md) · [参数选择锁](research/portfolio_selection.json) · [公开结果与测试凭据](docs/results/portfolio_holdout.summary.json)
 
-![两个实际合约的样本外净值与回撤](docs/results/oos_equity.png)
+这是历史研究操作顺序审计，不是 2026 年之前预注册的预测。测试已经被使用，再运行属于复现。
 
 ## 快速运行
 
-建议使用 64 位 Python 3.11。vn.py 包含 Qt 等较大依赖，首次安装需要一定下载时间。
+建议 64 位 Python 3.11，首次安装 vn.py 的 Qt 等依赖需要一定时间。
 
 ```powershell
 python -m venv .venv
-.venv\Scripts\Activate.ps1
+.venv/Scripts/Activate.ps1
 python -m pip install -e ".[dev,data]"
-python -m cta_lab.cli demo
+python -m cta_lab.portfolio_research demo
 ```
 
-Linux/macOS 将激活命令替换为 `source .venv/bin/activate`。如 PowerShell 禁止执行激活脚本，可直接使用 `.venv\Scripts\python.exe` 执行后续命令，无需改变系统策略。
+Linux/macOS 使用 `source .venv/bin/activate`。PowerShell 不能激活时，直接用 `.venv/Scripts/python.exe` 执行命令即可。
 
-`demo` 无需网络、数据库和交易账户，生成可复现的合成数据并运行完整研究链路。打开 `artifacts/demo/report.html`，页面含离线交互图表、成本敏感性和样本外指标。**合成数据仅用于工程演示，不能用来证明市场收益。**
+离线演示使用明确标注的合成实际月份合约，无需数据账户或网络。打开 `artifacts/portfolio/demo/report.html`，查看共享权益、名义敞口、预计保证金、各品种贡献、信号及成交事件。合成收益不作为市场证据。
 
-真实数据研究一条命令：
+复现已经发表的真实研究：
 
 ```powershell
-python scripts/run_research.py
+python scripts/reproduce_portfolio.py
 ```
 
-脚本从官网索引解析下载链接，缓存压缩包，读取 XLS/XLSX、转换实际合约、校验输入并运行研究。已有缓存时复用；已完成转换时可加 `--skip-download`。数据下载发生网络错误时会失败，不会自动改用合成数据。
+脚本使用已发表的上期所归档 URL 和 SHA-256，下载并清洗原始数据，验证冻结代码、协议及参数，重放最终测试并逐项比较统计；**不搜索参数，不覆盖原始公开首次测试凭据**。首次运行需要网络，原始文件较大。若来源文件变化，校验失败，不用替代数据凑出结果。报告位于 `artifacts/portfolio/reproduction/report.html`。
+
+仓库包含本次研究的参数锁。`select` 是新研究的封存流程，不是本次结果的复现步骤；已有锁或已访问最终测试数据时拒绝重新选择。修改冻结研究代码后也不能冒用原始凭据继续运行。新研究应建立独立协议、路径和未用于选择的证据。
 
 ```powershell
 python -m pytest -q
@@ -48,53 +54,44 @@ python -m ruff check .
 python -m ruff format --check .
 ```
 
-`requirements-lock.txt` 保存本次已验证的 Windows/Python 3.11 依赖快照，需要完全匹配时先 `python -m pip install -r requirements-lock.txt`，再安装本项目。CI 文件配置了 Windows/Linux 检查，但远端运行状态须以 GitHub Actions 实际结果为准。静态结果图可选安装 `.[viz]` 后运行 `python scripts/plot_results.py` 重新生成。
+本地已通过 41 个测试；Windows/Linux GitHub Actions 状态以仓库 Checks 为准。`requirements-lock.txt` 是本次 Windows/Python 3.11 环境快照。可选安装 `.[viz]`，再运行 `python scripts/plot_portfolio.py` 更新静态结果图（需要先完成真实研究复现）。
 
-## 数据和输出
+## 核心实现
 
-- `config/`：合约乘数、价格跳动、成本假设及策略/风险参数。
-- `src/cta_lab/shfe.py`：上期所年度文件导入与来源清单。
-- `src/cta_lab/strategy.py`：日线信号、仓位、收盘止损和风险退出。
-- `src/cta_lab/runner.py`：实际 vn.py 引擎接入、异常与期末持仓检查。
-- `src/cta_lab/research.py`：扩展训练窗口、固定参数网格、非重叠测试。
-- `tests/`：独立交易现金流对账、已知成交案例、因果性、风控及回测失败处理。
-- `docs/results/`：可公开核查的汇总统计、参数选择、数据哈希和版本。
-- `artifacts/`：本地 HTML、逐日盈亏、成交明细和事件审计；Git 忽略。
-- `data/downloads/`、`data/private/`：本地原始与转换行情；Git 忽略。
+- **因果换月**：D 日收盘后用当日及更早的持仓量、成交量与交割缓冲规则选择合约，最早 D+1 开盘执行。只向后续交割月换仓，各实际合约维护自己的指标，不把换月价差记成利润。
+- **共享资金**：一个 100 万账户，逐笔平仓后释放预算，再按固定品种顺序尝试开仓。使用实际开盘价检查单品种风险、合计初始止损风险、名义敞口和预计保证金，预算不足拒单。
+- **真实引擎接入**：使用官方 StrategyTemplate、BacktestingEngine 撮合与日盈亏计算，在边界处过滤缺失行情和不可执行订单；独立现金流账本逐日与官方组合盈亏对账。
+- **封存和失败处理**：记录实现/协议/参数/行情哈希，禁止测试期重选；持仓行情缺失或回调未完成即失败，不能返回看似有效的部分回测。
 
-输入 CSV 必须精确包含 `datetime,open,high,low,close,volume`，日期为 `YYYY-MM-DD` 交易日。重复、乱序、非有限数、错误 OHLC、非正价格和负成交量会拒绝导入。脚本不补缺失交易日。
+测试覆盖已知成交、换月跳价、双边成本、跳空超预算、旧仓未平、资金释放、缺失行情、未来价格与持仓量扰动，以及选择和最终测试访问门槛。真实最终样本没有触发预算拒单，拒单行为通过合成用例验证。
 
-自有数据示例：
+| 路径 | 内容 |
+|---|---|
+| src/cta_lab/portfolio_model.py | 合约选择、指标窗口与共享账户 |
+| src/cta_lab/portfolio.py | 官方组合引擎、策略和执行约束 |
+| src/cta_lab/portfolio_data.py | 上期所实际合约 OHLCV/OI 面板与来源校验 |
+| src/cta_lab/portfolio_research.py | 开发、验证、封存、最终测试与复现入口 |
+| src/cta_lab/portfolio_report.py | 离线交互报告与审计文件 |
+| tests/ | 金融行为、时序、数据和封存测试 |
 
-```powershell
-python -m cta_lab.cli run --csv data/private/shfe/rb2505.csv --config config/rb2505.json --data-kind real --source "合法取得的实际合约日行情；具体来源、授权和处理规则" --walk-forward --train-bars 120 --test-bars 40 --out artifacts/rb2505
-```
+原始 ZIP、转换面板在 data/downloads/、data/private/；本地逐日账本、成交及 HTML 在 artifacts/。这些目录由 Git 忽略，公开仓库只保留代码、汇总与来源哈希。日线标签按交易日处理，未还原夜盘分钟时序或历史数据发布时间。
 
-## 策略与执行约定
+## 模型边界
 
-收盘突破**前 N 根**最高价时做多，跌破前 N 根最低价时做空。ATR 使用截至当前收盘已知的真实波幅均值。持仓以反向通道或 ATR 追踪阈值在**收盘**判断退出，不假装能在当日最低/最高点止损。
+使用前序 Donchian 通道与 ATR；收盘形成信号，下一开盘撮合。止损、日亏损退出、回撤停开仓均在收盘检测，不能保证盘中损失上限。旧仓平掉后才能开新仓；新合约指标不足或不足一手时允许仅退出旧仓。
 
-下单量为以下三者最小值并向下取整：初始资金风险预算 / ATR 止损损失、名义敞口限额 / 每手名义价值、最大手数。默认每笔风险预算 0.5%、名义敞口上限 50%、最多 5 手。止损距离是计划风险，跳空可能使实际损失更大。
+每边手续费为成交额万分之一、滑点 1 tick，预计保证金统一按 15% 估算。它们是研究假设。权益按收盘盯市，不是交易所结算价保证金账单；没有模拟逐日历史保证金、容量、涨跌停排队、盘中追保或交易柜台。项目尚未接入 CTP/SimNow，也没有实盘收益或生产运行声明。
 
-委托是有限的积极限价单，买价为信号收盘价的 110%，卖价为 90%，经 vn.py 按 tick 取整。最早在下一根日线撮合；超出限价的跳空可能不成交。每日收盘撤销未成交委托，不把限价单称作市价单。信号时的仓位限额不保证跳空后的成交名义敞口仍低于限额。
+## 求职与早期版本
 
-默认当日盯市亏损达 2% 时发出平仓信号；权益较历史峰值回撤达 10% 后锁定停止开仓。它们在日线收盘检测、下一根尝试退出，不是盘中损失上限。研究窗倒数第二根收盘提交退出，最后一根用于撮合；若仍有持仓则整次运行失败。
+[面试与简历材料](docs/INTERVIEW.md) 提供 90 秒介绍、答辩问题、五分钟演示和一周安排。请在亲自复现并掌握代码后使用，简历只写自己能讲清并现场演示的内容。
 
-手续费按每边成交额万分之一、滑点按每手每边 1 tick 扣除。这是统一研究假设，不宣称等于历史经纪商费率。权益按收盘标记，**不是交易所结算价保证金账单**。没有模拟保证金追缴、涨跌停排队或成交量容量。详见 [架构与计算约定](docs/ARCHITECTURE.md)。
+保留的 v1 是两个实际螺纹钢合约各自运行的单合约基线，不属于当前共享资金组合。[v1 研究](docs/RESEARCH.md)、[v1 架构](docs/ARCHITECTURE.md)、`python -m cta_lab.cli demo` 和 `python scripts/run_research.py` 均指这个早期实验；不能把两份账户收益相加冒充组合。
 
-## 回放与实际交易的边界
+## 来源与许可
 
-`events.json` 中保留信号、订单 ID、成交和风险事件；样本外每折的成交与事件在 `evidence.json` 中。它们提供历史纸面执行演示。项目未配置 CTP/SimNow、未运行真实柜台模拟账户，不承诺可以直接实盘启动。
+代码采用 MIT；[第三方许可](THIRD_PARTY_NOTICES.md) 包括 vn.py 及策略应用。行情权利属于提供者，代码许可不授予行情再分发权。
 
-## 求职材料
-
-[面试与简历讲解](docs/INTERVIEW.md) 包含 90 秒介绍、关键代码入口、研究失效解释和一周演练安排。简历应强调实现与验证，不能把生成的合成业绩、样本内最优表现或未做过的实盘经历写作个人成绩。
-
-## 来源和许可
-
-代码采用 MIT 许可；第三方 vn.py / vnpy_ctastrategy 的许可见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。原始行情权利属于提供者，项目代码许可不授予行情再分发权。公开仓库仅保存研究汇总与哈希。使用官网数据前应阅读其使用声明。
-
-- [上海期货交易所](https://www.shfe.com.cn)：官网「数据 → 统计数据 → 数据下载」；产品栏可查螺纹钢合约参数。
-- [VeighNa CTA 策略文档](https://www.vnpy.com/docs/cn/community/app/cta_strategy.html)
-- [VeighNa CTA 回测文档](https://www.vnpy.com/docs/cn/community/app/cta_backtester.html)
-- [官方回测引擎源码](https://github.com/vnpy/vnpy_ctastrategy/blob/main/vnpy_ctastrategy/backtesting.py)
+- [上海期货交易所数据下载](https://www.shfe.com.cn/reports/tradedata/datadownload/)
+- [VeighNa 组合策略文档](https://www.vnpy.com/docs/cn/community/app/portfolio_strategy.html)
+- [官方组合回测引擎](https://github.com/vnpy/vnpy_portfoliostrategy/blob/main/vnpy_portfoliostrategy/backtesting.py)

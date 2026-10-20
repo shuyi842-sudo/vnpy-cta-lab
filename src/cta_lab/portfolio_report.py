@@ -86,7 +86,7 @@ def export_portfolio(result, cfg, out: Path, provenance: dict):
             ("最大回撤", f"{stats['max_drawdown']:.3%}"),
             ("Sharpe", f"{stats['sharpe']:.4f}" if stats["sharpe"] is not None else "n.a."),
             ("成交笔数（每边）", stats["fills"]),
-            ("换月两腿成本（元）", f"{stats['roll_cost']:,.2f}"),
+            ("换月相关成交成本（元）", f"{stats['roll_cost']:,.2f}"),
             ("换月选择次数", stats["roll_selections"]),
             ("拒单次数", stats["rejections"]),
         ],
