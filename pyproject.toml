@@ -4,10 +4,10 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vnpy-cta-lab"
-version = "0.1.0"
+version = "0.2.0"
 description = "Auditable CTA research and historical order replay using VeighNa"
 requires-python = ">=3.11,<3.14"
-dependencies = ["vnpy==4.5.0", "vnpy_ctastrategy==1.4.1"]
+dependencies = ["vnpy==4.5.0", "vnpy_ctastrategy==1.4.1", "vnpy_portfoliostrategy==1.3.0"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
@@ -16,6 +16,7 @@ viz = ["matplotlib>=3.9,<4"]
 
 [project.scripts]
 cta-lab = "cta_lab.cli:main"
+cta-portfolio = "cta_lab.portfolio_research:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -24,7 +24,10 @@ jobs:
       - run: python -m ruff format --check .
       - run: python -m pytest -q
       - run: python -m cta_lab.cli demo
+      - run: python -m cta_lab.portfolio_research demo
       - uses: actions/upload-artifact@v4
         with:
           name: synthetic-research-${{ matrix.os }}
-          path: artifacts/demo/
+          path: |
+            artifacts/demo/
+            artifacts/portfolio/demo/

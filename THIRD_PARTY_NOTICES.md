@@ -4,6 +4,7 @@ This project depends on, but does not vendor, the following upstream packages:
 
 - VeighNa / vn.py 4.5.0, Copyright (c) 2015-present Xiaoyou Chen, MIT License. Source: https://github.com/vnpy/vnpy
 - vnpy_ctastrategy 1.4.1, Copyright (c) 2015-present Xiaoyou Chen, MIT License. Source: https://github.com/vnpy/vnpy_ctastrategy
+- vnpy_portfoliostrategy 1.3.0, Copyright (c) 2015-present Xiaoyou Chen, MIT License. Source: https://github.com/vnpy/vnpy_portfoliostrategy
 
 Their distributions retain upstream license notices. PySide6/Qt, TA-Lib, NumPy, pandas, Plotly and all other installed dependencies retain their respective licenses; the project MIT license does not replace those licenses. This repository does not redistribute their binary distributions.
 
