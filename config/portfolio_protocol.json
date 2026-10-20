@@ -1,0 +1,33 @@
+{
+  "protocol_version": "portfolio-v1",
+  "capital": 1000000,
+  "annual_days": 240,
+  "development": ["2023-01-01", "2024-12-31"],
+  "validation": ["2025-01-01", "2025-12-31"],
+  "holdout": ["2026-01-01", "2026-09-30"],
+  "products": {
+    "rb": {"multiplier": 10, "tick": 1, "margin_rate": 0.15},
+    "cu": {"multiplier": 5, "tick": 10, "margin_rate": 0.15},
+    "al": {"multiplier": 5, "tick": 5, "margin_rate": 0.15}
+  },
+  "commission_rate": 0.0001,
+  "slippage_ticks": 1,
+  "entry_windows": [20, 40, 60],
+  "atr_multiples": [2, 3],
+  "exit_window": 15,
+  "atr_window": 20,
+  "risk_fraction": 0.005,
+  "portfolio_risk_cap": 0.015,
+  "product_notional_cap": 0.5,
+  "gross_notional_cap": 1.5,
+  "margin_cap": 0.35,
+  "max_contracts": 10,
+  "daily_loss_limit": 0.02,
+  "drawdown_limit": 0.10,
+  "min_previous_volume": 100,
+  "roll_oi_ratio": 1.10,
+  "delivery_buffer_days": 20,
+  "min_selection_fills": 12,
+  "entry_priority": ["rb", "cu", "al"],
+  "fallback": {"entry_window": 20, "atr_multiple": 2}
+}
