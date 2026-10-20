@@ -1,0 +1,283 @@
+{
+  "schema": "portfolio-selection-lock-v1",
+  "created_utc": "2026-10-20T12:35:18.249313+00:00",
+  "source_git_commit": "8e015de56ac2ab0c01b5d715814c83ed6969ff3b",
+  "protocol_sha256": "9d96f2e2becb75a3cdfeb466544766382144ba57d3607eba6fb1abcb1e3fa367",
+  "code_hashes": {
+    "portfolio.py": "23f50815cf18a773e75295156fa5b82535eb4c5a7a0f7995632d1d87085d48f9",
+    "portfolio_model.py": "cef7a6ab4a2c004dcb3aa4c1ae8a9485c205446eb96ff779f6be65bcf50d73e8",
+    "portfolio_data.py": "8bf8762ae2a43356ec4746fe31edc032b5f6ac76e4fbe1da2a74503418f0d19e",
+    "portfolio_research.py": "27625cbb0e40b2c17b0640f981369771cb4e17a5d713f751fe5165f524cd910f",
+    "metrics.py": "f40368d498c8596761d2531e17393569269ff23f6f28b36362781ca3d0999ece",
+    "data.py": "049d8586000c1c97f156957de9a5fb85d44f649207ac88f214f0af0aad6f5998",
+    "shfe.py": "a874103e1efbe29369eaabcd5e6fb75facc6b5e982158dc3eb73a978e641e8bd"
+  },
+  "development_panel_sha256": "440f8173259bee07330e1caaff9a8f43d70a96407f404eb49ad7e1c9ce655a5f",
+  "development_last_date": "2025-12-31",
+  "sources": [
+    {
+      "year": 2023,
+      "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202401/P020240119587353273027.zip",
+      "sha256": "605e119b8f6e7cd73b02fa18aa75ce1b388d5628aa024d7f5b7961d028a9ec2c"
+    },
+    {
+      "year": 2024,
+      "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202501/P020250103380580546440.zip",
+      "sha256": "68505aefe460ffa3167bd200477a5ebb05a8aaac5e477bb013e97ffbcf7bc99e"
+    },
+    {
+      "year": 2025,
+      "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202601/P020260317382428557825.zip",
+      "sha256": "fe0122e1ff0e072fc200ce924c488407a0305d3e5790692a19efc999709d4902"
+    }
+  ],
+  "holdout_archive_absent_at_selection": true,
+  "candidates": [
+    {
+      "setting": {
+        "entry_window": 20,
+        "atr_multiple": 2
+      },
+      "development": {
+        "days": 484,
+        "net_pnl": 53394.8345,
+        "end_equity": 1053394.8344999999,
+        "total_return": 0.05339483449999993,
+        "cagr": 0.02612965819868429,
+        "sharpe": 0.8609731650562146,
+        "max_drawdown": -0.023286434721716986,
+        "solvent": true,
+        "commission": 1790.1655,
+        "slippage": 4490.0,
+        "fills": 106,
+        "annual_days": 240,
+        "roll_cost": 2625.4835000000003,
+        "roll_selections": 53,
+        "rejections": 0
+      },
+      "validation": {
+        "days": 243,
+        "net_pnl": -5549.749999999999,
+        "end_equity": 994450.25,
+        "total_return": -0.00554975000000002,
+        "cagr": -0.005481422695119642,
+        "sharpe": -0.165934003792392,
+        "max_drawdown": -0.02773498831851917,
+        "solvent": true,
+        "commission": 1109.75,
+        "slippage": 2890.0,
+        "fills": 54,
+        "annual_days": 240,
+        "roll_cost": 1325.2875,
+        "roll_selections": 27,
+        "rejections": 0
+      }
+    },
+    {
+      "setting": {
+        "entry_window": 20,
+        "atr_multiple": 3
+      },
+      "development": {
+        "days": 484,
+        "net_pnl": 18055.864500000003,
+        "end_equity": 1018055.8645,
+        "total_return": 0.018055864499999963,
+        "cagr": 0.008912937017597322,
+        "sharpe": 0.5042803131157082,
+        "max_drawdown": -0.013654416230340138,
+        "solvent": true,
+        "commission": 869.1355000000001,
+        "slippage": 2290.0,
+        "fills": 88,
+        "annual_days": 240,
+        "roll_cost": 1536.4990000000003,
+        "roll_selections": 53,
+        "rejections": 0
+      },
+      "validation": {
+        "days": 243,
+        "net_pnl": 2806.062500000002,
+        "end_equity": 1002806.0625,
+        "total_return": 0.0028060624999999284,
+        "cagr": 0.0027713717936814763,
+        "sharpe": 0.14236776187728262,
+        "max_drawdown": -0.013397762100669453,
+        "solvent": true,
+        "commission": 578.9375,
+        "slippage": 1560.0,
+        "fills": 48,
+        "annual_days": 240,
+        "roll_cost": 1075.2525000000003,
+        "roll_selections": 27,
+        "rejections": 0
+      }
+    },
+    {
+      "setting": {
+        "entry_window": 40,
+        "atr_multiple": 2
+      },
+      "development": {
+        "days": 484,
+        "net_pnl": 51246.563,
+        "end_equity": 1051246.563,
+        "total_return": 0.05124656300000008,
+        "cagr": 0.025091437873932643,
+        "sharpe": 0.9359933097410993,
+        "max_drawdown": -0.02281387335636209,
+        "solvent": true,
+        "commission": 1203.4370000000001,
+        "slippage": 3080.0,
+        "fills": 68,
+        "annual_days": 240,
+        "roll_cost": 1435.806,
+        "roll_selections": 53,
+        "rejections": 0
+      },
+      "validation": {
+        "days": 243,
+        "net_pnl": -11103.954999999998,
+        "end_equity": 988896.045,
+        "total_return": -0.011103954999999943,
+        "cagr": -0.010967623669644655,
+        "sharpe": -0.43335664408222885,
+        "max_drawdown": -0.02383663266502689,
+        "solvent": true,
+        "commission": 753.955,
+        "slippage": 2020.0,
+        "fills": 38,
+        "annual_days": 240,
+        "roll_cost": 814.005,
+        "roll_selections": 27,
+        "rejections": 0
+      }
+    },
+    {
+      "setting": {
+        "entry_window": 40,
+        "atr_multiple": 3
+      },
+      "development": {
+        "days": 484,
+        "net_pnl": 11597.518000000002,
+        "end_equity": 1011597.518,
+        "total_return": 0.011597518000000084,
+        "cagr": 0.005734120768533524,
+        "sharpe": 0.3591288068889217,
+        "max_drawdown": -0.01746671770094055,
+        "solvent": true,
+        "commission": 652.482,
+        "slippage": 1720.0,
+        "fills": 66,
+        "annual_days": 240,
+        "roll_cost": 1037.5575,
+        "roll_selections": 53,
+        "rejections": 0
+      },
+      "validation": {
+        "days": 243,
+        "net_pnl": 1839.2295000000022,
+        "end_equity": 1001839.2295,
+        "total_return": 0.0018392295000000392,
+        "cagr": 0.0018165023522780377,
+        "sharpe": 0.10081013039350961,
+        "max_drawdown": -0.009491978620695285,
+        "solvent": true,
+        "commission": 495.7705,
+        "slippage": 1310.0,
+        "fills": 40,
+        "annual_days": 240,
+        "roll_cost": 939.025,
+        "roll_selections": 27,
+        "rejections": 0
+      }
+    },
+    {
+      "setting": {
+        "entry_window": 60,
+        "atr_multiple": 2
+      },
+      "development": {
+        "days": 484,
+        "net_pnl": 48101.519499999995,
+        "end_equity": 1048101.5195,
+        "total_return": 0.04810151950000008,
+        "cagr": 0.023569564813222144,
+        "sharpe": 0.9660242509771303,
+        "max_drawdown": -0.020898995348076932,
+        "solvent": true,
+        "commission": 913.4805000000001,
+        "slippage": 2320.0,
+        "fills": 50,
+        "annual_days": 240,
+        "roll_cost": 1202.97,
+        "roll_selections": 53,
+        "rejections": 0
+      },
+      "validation": {
+        "days": 243,
+        "net_pnl": -26771.152000000002,
+        "end_equity": 973228.848,
+        "total_return": -0.02677115200000002,
+        "cagr": -0.02644505338667591,
+        "sharpe": -1.303027756980657,
+        "max_drawdown": -0.028630377741243884,
+        "solvent": true,
+        "commission": 621.152,
+        "slippage": 1680.0,
+        "fills": 30,
+        "annual_days": 240,
+        "roll_cost": 462.1625000000001,
+        "roll_selections": 27,
+        "rejections": 0
+      }
+    },
+    {
+      "setting": {
+        "entry_window": 60,
+        "atr_multiple": 3
+      },
+      "development": {
+        "days": 484,
+        "net_pnl": 10791.423999999999,
+        "end_equity": 1010791.424,
+        "total_return": 0.010791423999999994,
+        "cagr": 0.005336641706626288,
+        "sharpe": 0.36849541002548225,
+        "max_drawdown": -0.018589001557212326,
+        "solvent": true,
+        "commission": 488.576,
+        "slippage": 1290.0,
+        "fills": 50,
+        "annual_days": 240,
+        "roll_cost": 861.3499999999999,
+        "roll_selections": 53,
+        "rejections": 0
+      },
+      "validation": {
+        "days": 243,
+        "net_pnl": -5049.636000000001,
+        "end_equity": 994950.364,
+        "total_return": -0.0050496360000000795,
+        "cagr": -0.004987450537322191,
+        "sharpe": -0.29711736204801403,
+        "max_drawdown": -0.01089641332862823,
+        "solvent": true,
+        "commission": 389.636,
+        "slippage": 1040.0,
+        "fills": 30,
+        "annual_days": 240,
+        "roll_cost": 658.45,
+        "roll_selections": 27,
+        "rejections": 0
+      }
+    }
+  ],
+  "chosen_index": 1,
+  "chosen": {
+    "entry_window": 20,
+    "atr_multiple": 3
+  },
+  "selection_rule": "maximum validation Sharpe after fixed development/validation fill+solvency eligibility; fixed grid-order tie-break; first-grid fallback"
+}
