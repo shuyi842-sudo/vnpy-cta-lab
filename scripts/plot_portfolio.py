@@ -59,4 +59,10 @@ fig.supxlabel(
 out = root / "docs/results"
 fig.savefig(out / "portfolio_holdout.png", dpi=170, facecolor="white")
 fig.savefig(out / "portfolio_holdout.svg", facecolor="white", metadata={"Date": None})
+svg = out / "portfolio_holdout.svg"
+svg.write_text(
+    "\n".join(line.rstrip() for line in svg.read_text(encoding="utf-8").splitlines()) + "\n",
+    encoding="utf-8",
+    newline="\n",
+)
 print(out / "portfolio_holdout.png")
