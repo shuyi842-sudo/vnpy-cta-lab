@@ -110,6 +110,32 @@ def export_report(
         else ""
     )
     source = html.escape(provenance["source"])
+    sensitivity_frame = pd.DataFrame(sensitivity)[
+        [
+            "cost_multiple",
+            "net_pnl",
+            "total_return",
+            "max_drawdown",
+            "commission",
+            "slippage",
+            "fills",
+        ]
+    ].rename(
+        columns={
+            "cost_multiple": "成本倍数",
+            "net_pnl": "净盈亏(元)",
+            "total_return": "净收益率",
+            "max_drawdown": "最大回撤",
+            "commission": "手续费(元)",
+            "slippage": "滑点(元)",
+            "fills": "成交笔数",
+        }
+    )
+    for name in ("净收益率", "最大回撤"):
+        sensitivity_frame[name] = sensitivity_frame[name].map(lambda value: f"{value:.3%}")
+    sensitivity_table = sensitivity_frame.to_html(
+        index=False, escape=True, float_format=lambda value: f"{value:,.2f}"
+    )
     body = f"""<!doctype html><html lang="zh-CN"><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><title>CTA Lab · Research Evidence</title>
 <style>*{{box-sizing:border-box}}body{{font:16px/1.65 system-ui,'Microsoft YaHei',sans-serif;margin:32px auto;padding:0 22px;max-width:1150px;color:#17243a;background:#f7f9fc;overflow-wrap:anywhere}}h1{{font-size:34px}}.notice{{padding:16px;border-left:5px solid #d18a00;background:#fff1cf}}table{{border-collapse:collapse;background:white}}td,th{{padding:8px 14px;border:1px solid #d5dce7;text-align:left}}.table-scroll{{max-width:100%;overflow-x:auto}}.table-scroll table{{font-size:14px}}code{{background:#e7edf5;padding:2px 5px}}section{{margin:32px 0;min-width:0}}.plotly-graph-div{{max-width:100%}}footer{{color:#5d6c7c}}@media(max-width:600px){{body{{padding:0 14px;margin:18px auto}}h1{{font-size:26px}}td,th{{padding:7px 10px}}}}</style>
@@ -118,11 +144,15 @@ def export_report(
 <p>日线收盘产生信号，最早下一根 K 线成交；采用 vn.py 限价撮合与逐日盯市。最后两根 K 线用于退出，不新增风险。</p>
 <section><h2>样本外验证</h2>{oos_chart}{oos_table}<p>{"训练参数、日期与各折结果见 evidence.json。" if oos else "本次未执行；不能声称已通过样本外验证。"}</p></section>
 <section>{chart}</section><section><h2>全样本指标（仅描述，不代表样本外表现）</h2>{stat_table}</section>
-<section><h2>成本敏感性（全样本固定参数）</h2>{pd.DataFrame(sensitivity).to_html(index=False, escape=True)}</section>
+<section><h2>成本敏感性（全样本固定参数）</h2>{sensitivity_table}</section>
 <section><h2>解释边界</h2><p>基准为不持仓且零利息的现金。手续费为成交额比例，滑点按每手每边固定价格扣款；不模拟成交量容量、保证金追缴、涨跌停队列及真实柜台。止损按收盘判断，跳空可能扩大亏损。仓位预算基于固定初始资金；不是资金复利再平衡。</p>
 <p>单合约数据不自动换月、不复权；连续合约不得直接当可交易合约。无交易日历校验，不会把周末、节假日或缺失数据自行补齐。最终退出未成交会报错。</p></section>
 <footer>可核查文件：daily.csv · trades.csv · events.json · evidence.json · oos_daily.csv（如有）。收益结果不构成实盘能力证明。</footer></html>"""
     body = body.replace("<table", '<div class="table-scroll"><table').replace(
         "</table>", "</table></div>"
+    )
+    body = body.replace(
+        ".table-scroll table{",
+        ".table-scroll td,.table-scroll th{white-space:nowrap}.table-scroll table{",
     )
     (out / "report.html").write_text(body, encoding="utf-8")
