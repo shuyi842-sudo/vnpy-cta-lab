@@ -1,8 +1,28 @@
 import pandas as pd
+import pytest
 
 from cta_lab.data import read_bars, write_fixture
 from cta_lab.research import walk_forward
 from cta_lab.runner import Contract, run_backtest
+
+
+def test_custom_long_lookbacks_are_fully_warmed_at_test_start(tmp_path):
+    path = tmp_path / "bars.csv"
+    write_fixture(path, count=250)
+    bars = read_bars(path, "DEMO.SHFE")
+    _, evidence = walk_forward(bars, Contract(), 150, 40, {"atr_window": 90, "exit_window": 80})
+    first = evidence["folds"][0]
+    expected = run_backtest(bars[59:190], Contract(), first["chosen"], bars[150].datetime)
+    assert first["events"] == expected.audit
+    assert first["statistics"] == expected.statistics
+
+
+def test_training_window_cannot_be_shorter_than_indicator_history(tmp_path):
+    path = tmp_path / "bars.csv"
+    write_fixture(path, count=250)
+    bars = read_bars(path, "DEMO.SHFE")
+    with pytest.raises(ValueError, match="largest indicator lookback"):
+        walk_forward(bars, Contract(), 120, 40, {"atr_window": 150})
 
 
 def test_walk_forward_selection_does_not_see_test_prices(tmp_path):

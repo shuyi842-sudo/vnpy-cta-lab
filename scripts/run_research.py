@@ -67,7 +67,9 @@ def main():
         output = Path(f"docs/results/{symbol}.summary.json")
         output.parent.mkdir(parents=True, exist_ok=True)
         output.write_text(
-            json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8"
+            json.dumps(summary, ensure_ascii=False, indent=2, allow_nan=False) + "\n",
+            encoding="utf-8",
+            newline="\n",
         )
 
 

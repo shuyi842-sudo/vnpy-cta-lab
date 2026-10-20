@@ -20,6 +20,14 @@ def walk_forward(
         for window in (20, 40, 60)
         for multiple in (2.0, 3.0)
     ]
+    max_lookback = max(
+        max(setting["entry_window"], setting.get("exit_window", 15), setting.get("atr_window", 20))
+        for setting in candidates
+    )
+    if train <= max_lookback + 2:
+        raise ValueError(
+            "training window must exceed the largest indicator lookback plus two exit bars"
+        )
     folds, frames = [], []
     for end in range(train, len(bars) - test + 1, test):
         scores = []
@@ -34,9 +42,19 @@ def walk_forward(
             chosen = 0  # Predeclared fallback; report insufficient training trades.
         else:
             chosen = max(range(len(candidates)), key=scores.__getitem__)
-        # Previous 61 bars warm indicators only; they cannot submit orders.
+        # Warm every configured indicator, including non-default ATR/exit windows.
+        # Retain the original 61-bar default warmup; these bars cannot submit orders.
+        warmup = max(
+            61,
+            candidates[chosen]["entry_window"] + 1,
+            candidates[chosen].get("exit_window", 15) + 1,
+            candidates[chosen].get("atr_window", 20) + 1,
+        )
         result = run_backtest(
-            bars[max(0, end - 61) : end + test], contract, candidates[chosen], bars[end].datetime
+            bars[max(0, end - warmup) : end + test],
+            contract,
+            candidates[chosen],
+            bars[end].datetime,
         )
         frames.append(result.daily)
         folds.append(
