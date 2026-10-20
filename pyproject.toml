@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vnpy-cta-lab"
+version = "0.1.0"
+description = "Auditable CTA research and historical order replay using VeighNa"
+requires-python = ">=3.11,<3.14"
+dependencies = ["vnpy==4.5.0", "vnpy_ctastrategy==1.4.1"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+data = ["xlrd==2.0.2", "openpyxl==3.1.5"]
+viz = ["matplotlib>=3.9,<4"]
+
+[project.scripts]
+cta-lab = "cta_lab.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]

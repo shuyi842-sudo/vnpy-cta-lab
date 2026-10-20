@@ -1,0 +1,4 @@
+{
+  "contract": {"vt_symbol": "rb2510.SHFE", "capital": 1000000, "multiplier": 10, "tick": 1, "commission_rate": 0.0001, "slippage_ticks": 1, "annual_days": 240},
+  "strategy": {"entry_window": 40, "exit_window": 15, "atr_window": 20, "atr_multiple": 2.5, "risk_fraction": 0.005, "max_contracts": 5, "max_notional_fraction": 0.5, "daily_loss_limit": 0.02, "drawdown_limit": 0.10}
+}

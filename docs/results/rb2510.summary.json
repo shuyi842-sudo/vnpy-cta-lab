@@ -1,0 +1,340 @@
+{
+  "symbol": "rb2510",
+  "full_sample": {
+    "days": 238,
+    "net_pnl": 11802.124999999998,
+    "end_equity": 1011802.125,
+    "total_return": 0.011802124999999997,
+    "cagr": 0.011901890403036575,
+    "sharpe": 0.7640386099672004,
+    "max_drawdown": -0.00913605503268533,
+    "solvent": true,
+    "commission": 107.87500000000001,
+    "slippage": 340.0,
+    "fills": 8,
+    "annual_days": 240
+  },
+  "out_of_sample": {
+    "days": 80,
+    "net_pnl": 2007.8099999999995,
+    "end_equity": 1002007.81,
+    "total_return": 0.0020078100000000543,
+    "cagr": 0.00603553199707485,
+    "sharpe": 0.27367837847523463,
+    "max_drawdown": -0.007479884608860399,
+    "solvent": true,
+    "commission": 92.19,
+    "slippage": 300.0,
+    "fills": 6,
+    "annual_days": 240
+  },
+  "cost_sensitivity_full_sample": [
+    {
+      "cost_multiple": 0,
+      "days": 238,
+      "net_pnl": 12250.0,
+      "end_equity": 1012250.0,
+      "total_return": 0.012250000000000094,
+      "cagr": 0.01235357443078744,
+      "sharpe": 0.7927237975102809,
+      "max_drawdown": -0.009017415989705624,
+      "solvent": true,
+      "commission": 0.0,
+      "slippage": 0.0,
+      "fills": 8,
+      "annual_days": 240
+    },
+    {
+      "cost_multiple": 1,
+      "days": 238,
+      "net_pnl": 11802.124999999998,
+      "end_equity": 1011802.125,
+      "total_return": 0.011802124999999997,
+      "cagr": 0.011901890403036575,
+      "sharpe": 0.7640386099672004,
+      "max_drawdown": -0.00913605503268533,
+      "solvent": true,
+      "commission": 107.87500000000001,
+      "slippage": 340.0,
+      "fills": 8,
+      "annual_days": 240
+    },
+    {
+      "cost_multiple": 2,
+      "days": 238,
+      "net_pnl": 11354.25,
+      "end_equity": 1011354.25,
+      "total_return": 0.0113542499999999,
+      "cagr": 0.011450208055436173,
+      "sharpe": 0.7352804260215579,
+      "max_drawdown": -0.009254758811160224,
+      "solvent": true,
+      "commission": 215.75000000000003,
+      "slippage": 680.0,
+      "fills": 8,
+      "annual_days": 240
+    },
+    {
+      "cost_multiple": 3,
+      "days": 238,
+      "net_pnl": 10906.375,
+      "end_equity": 1010906.375,
+      "total_return": 0.010906375000000024,
+      "cagr": 0.01099852738872431,
+      "sharpe": 0.7064579388807714,
+      "max_drawdown": -0.009373527378128799,
+      "solvent": true,
+      "commission": 323.625,
+      "slippage": 1020.0,
+      "fills": 8,
+      "annual_days": 240
+    }
+  ],
+  "runtime": {
+    "python": "3.11.9",
+    "vnpy": "4.5.0",
+    "vnpy_ctastrategy": "1.4.1",
+    "numpy": "2.4.6",
+    "pandas": "3.0.6",
+    "plotly": "7.1.0"
+  },
+  "contract": {
+    "vt_symbol": "rb2510.SHFE",
+    "capital": 1000000,
+    "multiplier": 10,
+    "tick": 1,
+    "commission_rate": 0.0001,
+    "slippage_ticks": 1,
+    "annual_days": 240
+  },
+  "input_sha256": "0106e7de2d3c57aa503288dad0c8a0c70a9268a451ab6318d7a43a64f0032fb4",
+  "archives": [
+    {
+      "year": 2024,
+      "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202501/P020250103380580546440.zip",
+      "sha256": "68505aefe460ffa3167bd200477a5ebb05a8aaac5e477bb013e97ffbcf7bc99e"
+    },
+    {
+      "year": 2025,
+      "url": "https://www.shfe.com.cn/reports/tradedata/datadownload/historicaldata/futures/202601/P020260317382428557825.zip",
+      "sha256": "fe0122e1ff0e072fc200ce924c488407a0305d3e5790692a19efc999709d4902"
+    }
+  ],
+  "unused_tail_bars": 38,
+  "folds": [
+    {
+      "train_start": "2024-10-16T00:00:00",
+      "train_end": "2025-04-11T00:00:00",
+      "test_start": "2025-04-14T00:00:00",
+      "test_end": "2025-06-12T00:00:00",
+      "chosen": {
+        "entry_window": 40,
+        "exit_window": 15,
+        "atr_window": 20,
+        "atr_multiple": 2.0,
+        "risk_fraction": 0.005,
+        "max_contracts": 5,
+        "max_notional_fraction": 0.5,
+        "daily_loss_limit": 0.02,
+        "drawdown_limit": 0.1
+      },
+      "training_scores": [
+        -0.1234918752912827,
+        0.6430351755208794,
+        0.9966094904651482,
+        0.2429722690510872,
+        null,
+        null
+      ],
+      "candidates": [
+        {
+          "entry_window": 20,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 2.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 20,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 3.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 40,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 2.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 40,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 3.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 60,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 2.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 60,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 3.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        }
+      ],
+      "statistics": {
+        "days": 40,
+        "net_pnl": -4610.765,
+        "end_equity": 995389.235,
+        "total_return": -0.004610765000000017,
+        "cagr": -0.027347656344194116,
+        "sharpe": -2.0848714629494416,
+        "max_drawdown": -0.005280744999999976,
+        "solvent": true,
+        "commission": 60.765,
+        "slippage": 200.0,
+        "fills": 4,
+        "annual_days": 240
+      }
+    },
+    {
+      "train_start": "2024-10-16T00:00:00",
+      "train_end": "2025-06-12T00:00:00",
+      "test_start": "2025-06-13T00:00:00",
+      "test_end": "2025-08-07T00:00:00",
+      "chosen": {
+        "entry_window": 20,
+        "exit_window": 15,
+        "atr_window": 20,
+        "atr_multiple": 3.0,
+        "risk_fraction": 0.005,
+        "max_contracts": 5,
+        "max_notional_fraction": 0.5,
+        "daily_loss_limit": 0.02,
+        "drawdown_limit": 0.1
+      },
+      "training_scores": [
+        0.06868865853419472,
+        1.0769048930833747,
+        0.7846119125748259,
+        0.917360742206424,
+        0.29855995479291547,
+        null
+      ],
+      "candidates": [
+        {
+          "entry_window": 20,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 2.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 20,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 3.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 40,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 2.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 40,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 3.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 60,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 2.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        },
+        {
+          "entry_window": 60,
+          "exit_window": 15,
+          "atr_window": 20,
+          "atr_multiple": 3.0,
+          "risk_fraction": 0.005,
+          "max_contracts": 5,
+          "max_notional_fraction": 0.5,
+          "daily_loss_limit": 0.02,
+          "drawdown_limit": 0.1
+        }
+      ],
+      "statistics": {
+        "days": 40,
+        "net_pnl": 6618.575000000001,
+        "end_equity": 1006618.575,
+        "total_return": 0.006618574999999849,
+        "cagr": 0.04037436048999954,
+        "sharpe": 1.3548396327511791,
+        "max_drawdown": -0.007445872268526776,
+        "solvent": true,
+        "commission": 31.425,
+        "slippage": 100.0,
+        "fills": 2,
+        "annual_days": 240
+      }
+    }
+  ]
+}
